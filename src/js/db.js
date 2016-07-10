@@ -23,7 +23,7 @@ export function post(user) {
 
     let requestPost = new XMLHttpRequest();
 
-    requestPost.open('POST', '/db?user=' + user, true);
+    requestPost.open('POST', 'http://localhost:3000/db?user=' + user, true);
     requestPost.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
 
     requestPost.onreadystatechange = function () {

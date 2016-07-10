@@ -41,18 +41,31 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
 
-    db.insert(req.query, function (err, newDoc) {
-        // newDoc is the newly inserted document, including its _id
+	// check for existing user already
+	db.find(req.query, function(err, docs) {
 
-        if (err) {
-            res.send('err');
-        } else {
 
-            res.send(newDoc)
+		if (!docs.length) {
+			//console.log('looks fresh, lets add it')
 
-        }
 
-    });
+			db.insert(req.query, function (err, newDoc) {
+		        // newDoc is the newly inserted document, including its _id
+
+		        if (err) {
+		            res.send('err');
+		        } else {
+		            res.send(newDoc)
+		        }
+
+		    });
+
+		} else {
+			res.send('User already exists')
+			//console.log('already got it')
+		}
+	})
+
 
 });
 
