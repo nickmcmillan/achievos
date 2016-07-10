@@ -1,6 +1,7 @@
 var doc = document
 var host = window.location.href
-var serviceUrl = 'https://achievos.xyz/request?url=' + host
+var localStorangeVal = localStorage.getItem('Achievos Username')
+var serviceUrl = 'http://localhost:3000/request?url=' + host + (localStorangeVal ? '&user=' + localStorangeVal : '')
 var request = new XMLHttpRequest();
 
 request.open('GET', serviceUrl);
@@ -10,6 +11,10 @@ request.onload = function() {
 	var response = request.response;
 
 	console.log(response);
+
+	if (response.default) {
+		doc.documentElement.classList.add('achievos-installed')
+	}
 
 	// if there's a response, we have a winner
 	if (!!response.title) {

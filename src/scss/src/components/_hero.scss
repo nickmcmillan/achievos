@@ -1,28 +1,55 @@
+$padding-sm: 4vmin;
+$padding-lg: 2.5vmin;
+
 html {
-	border: 2vmin solid #fff;
-//
+	border: $padding-sm solid #fff;
 }
 
 .hero {
-	padding: 2.5vmin 10%;
+	padding: $padding-sm 10%;
 	display: flex;
 	flex-direction: column;
 	background-color: $grey-light;
+	height: 80vh;
+}
 
+.hero-title {
+	max-width: 50vmin;
+//	outline: 1px solid blue;
 }
 
 .hero-icon {
-	max-width: 50vmin;
+	flex-shrink: 0;
 }
 
 .hero-header {
 	margin: 0;
 	padding: 0;
 	font-weight: normal;
-	hyphens: auto;
+	//hyphens: auto;
 	font-family: 'Secular One', sans-serif;
 	font-feature-settings: 'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;
 	font-size: 29.25px;
 	font-size: 11.75vmin;
 	letter-spacing: 0;
+}
+.hero-content {
+	margin-top: -3.5vmin;
+}
+
+@media (min-width: $screen-md) {
+	html {
+		border: $padding-lg solid #fff;
+	}
+
+	.hero {
+		padding: $padding-lg 15%;
+	}
+	.hero-title {
+		max-width: 40vmin;
+	}
+	.hero-header {
+	    font-size: 9.35vmin;
+	}
+
 }

@@ -4,7 +4,7 @@
   "description": "Get achievements for discovering websites",
   "main": "app.js",
   "scripts": {
-    "serve": "gulp",
+    "serve": "killall node && gulp",
     "server": "gulp server",
     "build": "gulp build",
     "node": "node app.js",

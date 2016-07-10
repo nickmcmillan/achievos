@@ -1,0 +1,43 @@
+.hero-content {
+	position: relative;
+}
+
+.prompt {
+	position: absolute;
+	opacity: 0;
+	visibility: hidden;
+	//transition: all $timing ease;
+}
+
+html:not(.achievos-installed) {
+	.prompt--install {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+
+.achievos-installed {
+
+}
+
+.not-chrome {
+	.prompt--not-chrome {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.user-set--false {
+	.prompt--set-user {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.user-set--true {
+	.prompt--progress {
+		opacity: 1;
+		visibility: visible;
+	}
+}

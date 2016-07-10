@@ -1,12 +1,18 @@
 {
-  "manifest_version": 2,
-  "name": "Achievos",
-  "description": "Get achievements for discovering websites",
-  "version": "1.0",
-  "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["extension.js"]
-      }
-  ]
+	"manifest_version": 2,
+	"name": "Achievos",
+	"description": "4Get achievements for discovering websites",
+	"version": "1.0",
+	"externally_connectable": {
+		"matches": ["*://localhost/*", "*://achievos.xyz/*"]
+	},
+	"permissions": [
+		"storage"
+	],
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["extension.js"]
+		}
+	]
 }

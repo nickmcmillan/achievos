@@ -9,6 +9,8 @@
 @import "src/tools/normalize.mod";
 @import "src/tools/mixins";
 @import "src/tools/helpers";
+@import "src/tools/visibility";
+
 
 
 /* ==========================================================================
@@ -32,6 +34,7 @@
    Common
    ========================================================================== */
 
+@import "src/components/animations";
 @import "src/components/header";
 @import "src/components/footer";
 @import "src/components/intro";

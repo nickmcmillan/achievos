@@ -35,9 +35,12 @@ app.use('/build', express.static(path.join(__dirname, 'build')));
 
 var routes = require('./routes/index');
 var request = require('./routes/request');
+var createUser = require('./routes/createUser');
 
 app.use('/', routes);
 app.use('/request', request);
+app.use('/db', createUser);
+
 
 var env = {
   production: process.env.NODE_ENV === 'production'
