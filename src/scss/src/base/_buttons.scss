@@ -1,0 +1,86 @@
+
+button {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+@keyframes hue {
+  from {
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    filter: hue-rotate(-360deg);
+  }
+}
+
+.button {
+    font-size: em(16);
+	color: $grey-light;
+	background-color: $grey-dark;
+    display: inline-block;
+    padding: 0px 20px;
+    text-decoration: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    min-width: 120px;
+    text-align: center;
+    transition: background-color $timing ease;
+    will-change: background-color;
+
+    &:disabled,
+    .disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+	&:hover {
+		background-color: #2CD892;
+		animation: hue 5s infinite linear;
+	}
+
+}
+
+
+
+.button-inline {
+    @include anchor('regular');
+}
+
+
+
+@media (min-width: $screen-md) {
+  .button {
+    font-size: em(18);
+    padding: 20px 20px;
+    //min-width: 190px;
+
+  }
+
+}
+
+@media (min-width: $screen-lg) {
+  .button {
+    font-size: em(20, $base-font-lg);
+
+    padding: {
+        top: 22px;
+        bottom: 22px;
+    }
+  }
+}
+
+
+@media (min-width: $screen-xl) {
+    .button {
+        min-width: 175px;
+    }
+}

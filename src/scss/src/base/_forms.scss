@@ -1,0 +1,266 @@
+::-webkit-input-placeholder {
+  color: $grey-light;
+}
+
+:-moz-placeholder {
+  color: $grey-light;
+}
+
+:-ms-input-placeholder {
+  color: $grey-light;
+}
+
+/* Place Holder CSS for Focus */
+:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity $timing/2 linear;
+}
+
+:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity $timing/2 linear;
+}
+
+:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity $timing/2 linear;
+}
+
+
+
+
+.form-row {
+  position: relative;
+  text-align: left;
+  margin-bottom: $base-spacing/2;
+
+  input,
+  label,
+  select {
+    display: inline-block;
+  }
+
+  label,
+  legend {
+    //font-size: em(16);
+    //text-transform: uppercase;
+    margin-bottom: 5px;
+    min-width: 300px;
+
+  }
+
+  input,
+  select,
+  textarea {
+    background-color: $white;
+    border: 0;
+    padding: 10px $base-spacing/2;
+    height: 50px;
+    width: 100%;
+
+    &:focus {
+      ////outline-color: $yellow;
+    }
+  }
+
+  textarea {
+    min-height: 200px;
+  }
+
+
+
+  input[type="search"] {
+    appearance: none;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    @include visuallyhidden();
+
+    + label {
+      font-family: inherit;
+      position: relative;
+      padding-left: $base-spacing * 1.25;
+      margin-bottom: 20px;
+      height: 25px;
+
+      &::before {
+        position: absolute;
+
+        z-index: 1;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.5);
+        transition: all $timing/2 $easeInOutCubicBounce;
+      }
+
+      &::after {
+        background-color: $white;
+        width: 25px;
+        height: 25px;
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border: 2px solid transparent;
+        transition: border-color $timing/2 ease;
+        will-change: border-color;
+      }
+
+    }
+    &:checked {
+      + label {
+        &::before {
+          visibility: visible;
+          opacity: 1;
+          transform: scale(1);
+
+        }
+      }
+    }
+
+    &:hover,
+    &:focus {
+      + label {
+
+        cursor: pointer;
+
+        &::after {
+          //border-color: $yellow;
+        }
+      }
+    }
+  }
+
+
+  input[type="checkbox"] {
+    + label {
+      &::before {
+        content: svg-url('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="18" height="11.9" viewBox="0 0 17 12" xml:space="preserve"><rect x="3.4" y="2.2" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.9957 5.3361)" width="2" height="10.6" fill="%23ffb400"/><rect x="11" y="-1.5" transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.7438 -6.7606)" width="2" height="14.9" fill="%23ffb400"/></svg>');
+        left: 4px;
+        bottom: -2px;
+        width: 18px;
+      }
+    }
+  }
+
+
+  input[type="radio"] {
+    + label {
+      &::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        //background-color: $yellow;
+        left: 6.5px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+
+      }
+      &::after {
+        border-radius: 50%;
+      }
+    }
+  }
+
+
+
+}
+
+// .form-row--offset {
+//   //text-align: center;
+//   //justify-content: center;
+// }
+
+.forgot-password {
+  margin-bottom: $base-spacing;
+  display: inline-block;
+  @include anchor('regular');
+}
+
+
+.select-wrapper {
+  position: relative;
+  margin-bottom: $base-spacing;
+  width: 100%;
+
+  &::after {
+    position: absolute;
+    content: svg-url('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="19.4" height="10.4" viewBox="-322.4 589.8 19.4 10.4" xml:space="preserve"><polyline points=" -303.7 590.5 -312.7 599.5 -321.7 590.5 " style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5;stroke:%23ffb400"/></svg>');
+    top: 10px;
+    width: 20px;
+    right: $base-spacing / 2;
+    pointer-events: none;
+
+  }
+
+  select {
+    margin-bottom: 0;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+  }
+
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+
+
+
+@media (min-width: $screen-md) {
+  .form-row {
+    max-width: 770px;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 25px;
+
+
+    input,
+    .select-wrapper,
+    textarea {
+      max-width: 470px;
+    }
+
+    label,
+    legend {
+      margin-bottom: $base-spacing / 3;
+    }
+
+
+
+  }
+
+
+  .select-wrapper {
+    margin: {
+      left: $base-spacing/4;
+      right: $base-spacing/4;
+    }
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+  }
+
+}
+
+
+@media (min-width: $screen-md) {
+
+
+  .form-row--offset {
+      padding-left: 200px;
+      //flex-direction: column;
+
+  }
+
+}

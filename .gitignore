@@ -1,0 +1,5 @@
+node_modules
+build
+
+#this is where the secrets are!
+routes/urls.js

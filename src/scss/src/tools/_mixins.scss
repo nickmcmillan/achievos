@@ -1,0 +1,157 @@
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+
+// Convert px to em
+// =====================================================================
+
+@function em($pixels, $base-font: $base-font-sm) {
+  @return #{$pixels/ strip-unit($base-font)  }em
+}
+
+
+@mixin vertical-align() {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin visuallyhidden() {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+
+
+// mixin arguments:
+// 1. color of the highlighted text
+// 2. background color
+// 3. thickness small or large (how much space the hanging underlines need surrounding them)
+
+// @mixin hanging-underline($color, $bgcolor: #fff, $thickness: 'small') {
+//   $width: 0;
+//   $offset: 0;
+
+//   @if $thickness == 'large' {
+//     $width: 4px;
+//     $offset: 2px;
+//   } @else {
+//     $width: 1px;
+//     $offset: 2px;
+//   }
+
+//   text-decoration: none;
+
+//   &:hover,
+//   &:focus {
+//     text-decoration: none;
+//     text-shadow: -$width 1px 0 $bgcolor, $width 1px 0 $bgcolor;
+//     background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, $color 0, $color $offset, rgba(0, 0, 0, 0) $offset);
+//     color: $color;
+
+//     // iOS already does a great job of underline breaking.
+//     // and if "no-textshadow" then it won't work, so go default instead
+//     .iOS &,
+//     .no-textshadow & {
+//       text-decoration: underline;
+//       box-shadow: none;
+//       background-image: none;
+//     }
+
+//   }
+// }
+
+
+@mixin anchor($type: 'para') {
+
+  text-decoration: none;
+  transition: none;
+
+
+
+  @if $type == 'para' {
+    //box-shadow: inset 0 -1px 0 lighten($grey-dark, 35%);
+    border-bottom: 1px solid lighten($grey-dark, 35%);
+
+
+    &:hover,
+    &:focus {
+      box-shadow: inset 0 -1px 0 lighten($grey-dark, 35%);
+      outline: none;
+    }
+
+  }
+
+  @if $type == 'regular' {
+    //box-shadow: inset 0 -1px 0 lighten($grey-dark, 35%);
+    border-bottom: 1px solid lighten($grey-dark, 35%);
+
+    &:hover,
+    &:focus {
+      box-shadow: inset 0 -1px 0 lighten($grey-dark, 35%);
+      outline: none;
+    }
+
+  } @else {
+    //box-shadow: inset 0 -1px 0 transparentize($white, 0.6);
+    border-bottom: 1px solid transparentize($white, 0.6);
+    font-family: inherit;
+
+    &:hover,
+    &:focus {
+      box-shadow: inset 0 -1px 0 transparentize($white, 0.6);
+      outline: none;
+    }
+  }
+
+
+
+
+}
+
+
+
+// http://codepen.io/jakob-e/pen/doMoML?editors=1100
+
+//
+//  Function to replace characters in a string
+//
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace +
+        str-replace(str-slice($string, $index +
+        str-length($search)), $search, $replace);
+    }
+    @return $string;
+}
+
+@function svg-url($svg){
+    //
+    // Chunk up string in order to avoid
+    // "SystemStackError: stack level too deep"
+    //
+    $encoded:'';
+    $slice: 2000;
+    $index: 0;
+    $loops: ceil(str-length($svg)/$slice);
+    @for $i from 1 through $loops {
+        $chunk: str-slice($svg, $index, $index + $slice - 1);
+        $chunk: str-replace($chunk,'"','\'');
+        $chunk: str-replace($chunk,'<','%3C');
+        $chunk: str-replace($chunk,'>','%3E');
+        $chunk: str-replace($chunk,'&','%26');
+        $chunk: str-replace($chunk,'#','%23');
+        $encoded: #{$encoded}#{$chunk};
+        $index: $index + $slice;
+    }
+    @return url("data:image/svg+xml;charset=utf8,#{$encoded}");
+}
