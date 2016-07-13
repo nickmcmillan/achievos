@@ -14,6 +14,8 @@ var Datastore = require('nedb'),
 
 var pushToDb = function(userDetail, achievoId) {
 
+	console.log(userDetail);
+
 	db.update()
 
 	db.insert(req.query, function (err, newDoc) {
@@ -37,7 +39,7 @@ router.get('/', function(req, res) {
 		res.send('That ain\'t workin. This guy needs a url parameter. Like ?url=zombo.com')
 	}
 	if (req.query.user) {
-		
+
 	}
 
 	var requestQuery = req.query.url.toLowerCase()

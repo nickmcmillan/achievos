@@ -1,14 +1,23 @@
 'use strict'
 
+import './utilities/isChromium'
 import {retrieve, post} from './db'
+import docCookies from './utilities/cookies'
+
 
 let doc = document
 
+// wait a bit before showing content, so the extension (if installed) can update classes on the html node
+setTimeout(()=>{
+	doc.documentElement.classList.add('load-timeout')
+}, 500)
 
-// has localstorage been set?
+
+// has cookie been set?
 let checkUserName = function() {
 
-	if (localStorage.getItem('Achievos Username') === null) {
+
+	if ( docCookies.getItem('Achievos Username') === null ) {
 
 		doc.documentElement.classList.remove('user-set--true')
 		doc.documentElement.classList.add('user-set--false')
@@ -17,7 +26,7 @@ let checkUserName = function() {
 
 		doc.documentElement.classList.remove('user-set--false')
 		doc.documentElement.classList.add('user-set--true')
-		doc.getElementById('you').textContent = localStorage.getItem('Achievos Username');
+		doc.getElementById('you').textContent = docCookies.getItem('Achievos Username')
 
 	}
 
@@ -26,27 +35,46 @@ let checkUserName = function() {
 
 
 let setUserName = function(e) {
+
 	e.preventDefault()
 	let userValue = doc.getElementById('email').value
 
-	// add a new user to the db.
-	post(userValue)
+	// add a new user to the db, if successful, set a cookie
+	post(userValue, function(result) {
+
+		//console.log(result);
+
+		if (result === 'success') {
+
+			// looking good, now we push to extension storage sync
+			let syncSetEvent = document.createEvent('Event');
+			syncSetEvent.initEvent('syncSet');
+			doc.dispatchEvent(syncSetEvent);
+
+			checkUserName()
+			return
+		}
+
+		if (result === 302) {
+			doc.getElementById('form--set-user-output').textContent = 'User already exists'
+			return
+		}
+
+		if (result === 'err') {
+			doc.getElementById('form--set-user-output').textContent = 'Problems'
+			return
+		}
+
+	})
 
 
-
-	localStorage.setItem('Achievos Username', userValue)
-
-	checkUserName()
 }
 
 checkUserName()
 
 
-
-
 doc.getElementById('form--set-user').addEventListener("submit", setUserName, false)
 doc.getElementById('form--not-chrome').addEventListener("submit", setUserName, false)
-
 
 
 document.getElementById('add-to-chrome').addEventListener('click', function(e) {
@@ -56,20 +84,3 @@ document.getElementById('add-to-chrome').addEventListener('click', function(e) {
 		console.log('fail install')
 	}
 })
-
-
-// http://stackoverflow.com/a/13348618
-var isChromium = window.chrome,
-    winNav = window.navigator,
-    vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-    isIOSChrome = winNav.userAgent.match("CriOS");
-
-if (isIOSChrome) {
-   // is Google Chrome on IOS
-} else if (isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-   // is Google Chrome
-} else {
-   doc.documentElement.classList.add('not-chrome')
-}

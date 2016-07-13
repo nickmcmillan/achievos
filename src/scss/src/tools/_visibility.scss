@@ -1,5 +1,16 @@
+.load-timeout {
+	.hero-content {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+
 .hero-content {
 	position: relative;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 300ms;
 }
 
 .prompt {
@@ -9,17 +20,14 @@
 	//transition: all $timing ease;
 }
 
-html:not(.achievos-installed) {
-	.prompt--install {
-		opacity: 1;
-		visibility: visible;
-	}
-}
+//
+// html:not(.achievos-installed) {
+// 	.prompt--install {
+// 		opacity: 1;
+// 		visibility: visible;
+// 	}
+// }
 
-
-.achievos-installed {
-
-}
 
 .not-chrome {
 	.prompt--not-chrome {
@@ -33,11 +41,35 @@ html:not(.achievos-installed) {
 		opacity: 1;
 		visibility: visible;
 	}
+	.prompt--progress {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
 
 .user-set--true {
 	.prompt--progress {
 		opacity: 1;
 		visibility: visible;
+	}
+}
+
+
+
+.achievos-installed--true {
+
+}
+
+.achievos-installed--false {
+
+	.prompt--install {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.prompt--progress,
+	.prompt--set-user {
+		opacity: 0;
+		visibility: hidden;
 	}
 }

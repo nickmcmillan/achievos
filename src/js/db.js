@@ -19,27 +19,40 @@ export function retrieve(user) {
 }
 
 
-export function post(user) {
+export function post(user, callback) {
 
     let requestPost = new XMLHttpRequest();
 
-    requestPost.open('POST', 'http://localhost:3000/db?user=' + user, true);
+    requestPost.open('POST', 'http://localhost:8081/db?user=' + user, true);
     requestPost.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
 
     requestPost.onreadystatechange = function () {
+
+		console.log(requestPost.status);
+
         // readystate 4 means 'complete'
-        // status 200 means perfect
-        if (requestPost.readyState !== 4 || requestPost.status !== 200) {
+        // status 200 means 'ok'
+        if (requestPost.readyState !== 4) {
             return
         }
 
+		// user exists already
+		if (requestPost.status === 302) {
+			callback(302)
+			return
+		}
+
         if (requestPost.responseText !== 'err') {
             // all good in the hood
-            console.log(requestPost.responseText);
-
+            //console.log(requestPost.responseText);
+			callback('success')
         }
 
     };
+
+	requestPost.onerror = function() {
+		callback('err')
+	}
 
 
     // need to encode the string so the xmlhttprequeset doesn't strip it

@@ -1,45 +1,49 @@
-var doc = document
-var host = window.location.href
-var localStorangeVal = localStorage.getItem('Achievos Username')
-var serviceUrl = 'http://localhost:3000/request?url=' + host + (localStorangeVal ? '&user=' + localStorangeVal : '')
-var request = new XMLHttpRequest();
+let doc = document
+let host = window.location.href
 
-request.open('GET', serviceUrl);
-request.responseType = 'json';
-request.onload = function() {
+//chrome.storage.sync.clear()
 
-	var response = request.response;
+chrome.storage.sync.get('achievos', (obj) => {
 
-	console.log(response);
+	// if it exists, add the saved username into the query string
+	let username = obj.achievos
+	let serviceUrl = 'http://localhost:3000/request?url=' + host + (username ? '&user=' + username : '')
+	let request = new XMLHttpRequest()
 
-	if (response.default) {
-		doc.documentElement.classList.add('achievos-installed')
+	request.open('GET', serviceUrl)
+	request.responseType = 'json'
+	request.onload = function() {
+
+		let response = request.response;
+
+		//console.log(response);
+
+		// if there's a response, we have a winner
+		if (!!response.title) {
+			doc.body.onload = createNotification(username, response)
+		}
+
 	}
 
-	// if there's a response, we have a winner
-	if (!!response.title) {
-		doc.body.onload = createNotification(response)
+	request.onerror = function(e) {
+		console.error('Achievos whoopsie', e)
 	}
 
-}
+	request.send()
+})
 
-request.onerror = function(e) {
-	console.error('Achievos whoopsie', e)
-}
 
-request.send();
-
-function createNotification(response) {
+function createNotification(username, response) {
 
 	// generate elements
-	var wrapperDiv = doc.createElement('div')
-	var titleAnchor = doc.createElement('a')
-	var contentDiv = doc.createElement('div')
-	var pointsDiv = doc.createElement('div')
-	var iconDiv = doc.createElement('div');
+	let wrapperDiv = doc.createElement('div')
+	let titleAnchor = doc.createElement('a')
+	let contentDiv = doc.createElement('div')
+	let pointsDiv = doc.createElement('div')
+	let iconDiv = doc.createElement('div');
 
 	// create the icon http://www.flaticon.com/free-icon/achievement_142733
-	var svgString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 485 485" xml:space="preserve"><path d="M257.5 217.1V0H104.5v131.3H227.5v85.8L0 462.9V485h485v-22.1L257.5 217.1zM314.9 323.3l-24.9 18 -47.5-34.2 -47.5 34.2 -24.9-18 72.4-78.2L314.9 323.3zM134.5 101.3V30h93v71.3H134.5zM48.2 455l101.3-109.5 45.5 32.8 47.5-34.2 47.5 34.2 45.5-32.8L436.8 455H48.2z"/></svg>'
+	let svgString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 485 485" xml:space="preserve"><path d="M257.5 217.1V0H104.5v131.3H227.5v85.8L0 462.9V485h485v-22.1L257.5 217.1zM314.9 323.3l-24.9 18 -47.5-34.2 -47.5 34.2 -24.9-18 72.4-78.2L314.9 323.3zM134.5 101.3V30h93v71.3H134.5zM48.2 455l101.3-109.5 45.5 32.8 47.5-34.2 47.5 34.2 45.5-32.8L436.8 455H48.2z"/></svg>'
 	iconDiv.innerHTML = svgString
 
 	// give them classes
@@ -49,10 +53,10 @@ function createNotification(response) {
 	pointsDiv.classList.add('achievos-points')
 
 	// give them content
-	titleAnchor.setAttribute('href', 'https://www.achievos.com')
+	titleAnchor.setAttribute('href', `https://www.achievos.xyz?user=${username}`)
 	titleAnchor.setAttribute('target', '_blank')
-	var titleContent = doc.createTextNode(response.title)
-	var pointsContent = doc.createTextNode(response.points + ' points')
+	let titleContent = doc.createTextNode(response.title)
+	let pointsContent = doc.createTextNode(username ? response.points + ' points' : 'Login to grab some points!')
 
 	// add each element to the main wrapper
 	titleAnchor.appendChild(titleContent)
@@ -63,7 +67,7 @@ function createNotification(response) {
 	wrapperDiv.appendChild(contentDiv)
 
 	// create the css
-	var css = doc.createElement('style')
+	let css = doc.createElement('style')
 	css.type = "text/css"
 	css.innerHTML = `
 	.achievos {
@@ -128,3 +132,40 @@ function createNotification(response) {
 	}, 5000)
 
 }
+
+
+// achievos website stuff
+
+// change classes on achievos website
+if (host.indexOf('localhost'.toLowerCase()) >= 0 || host.indexOf('achievos'.toLowerCase()) >= 0) {
+	doc.documentElement.classList.add('achievos-installed--true')
+	doc.documentElement.classList.remove('achievos-installed--false')
+}
+
+
+// this has to be there, but does nothing
+// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+// 	//console.log('message', message);
+//     //alert("message received");
+// });
+
+
+document.addEventListener('syncSet', function(e) {
+    //chrome.runtime.sendMessage("test");
+
+	let inputValue = doc.getElementById('email').value
+
+	// save user data
+	chrome.storage.sync.set({'achievos': inputValue}, function() {
+		console.log('saved to chrome.storage.sync')
+	})
+
+})
+
+document.addEventListener('click', function(e) {
+
+	chrome.storage.sync.get('achievos', function(ok) {
+		console.log('ok', ok.achievos)
+	})
+
+})

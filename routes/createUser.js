@@ -44,16 +44,14 @@ router.post('/', function(req, res) {
 	// check for existing user already
 	db.find(req.query, function(err, docs) {
 
-
 		if (!docs.length) {
 			//console.log('looks fresh, lets add it')
-
 
 			db.insert(req.query, function (err, newDoc) {
 		        // newDoc is the newly inserted document, including its _id
 
 		        if (err) {
-		            res.send('err');
+		            res.send(err);
 		        } else {
 		            res.send(newDoc)
 		        }
@@ -61,8 +59,7 @@ router.post('/', function(req, res) {
 		    });
 
 		} else {
-			res.send('User already exists')
-			//console.log('already got it')
+			res.sendStatus(302) // 302 FOUND. user already exists
 		}
 	})
 
