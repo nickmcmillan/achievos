@@ -14,7 +14,7 @@ export function retrieve(user) {
         }
     };
 
-    requestGet.send();
+	requestGet.send();
 
 }
 
@@ -28,7 +28,7 @@ export function post(user, callback) {
 
     requestPost.onreadystatechange = function () {
 
-		console.log(requestPost.status);
+		//console.log(requestPost.status);
 
         // readystate 4 means 'complete'
         // status 200 means 'ok'

@@ -8,35 +8,32 @@ var router = express.Router();
 var Datastore = require('nedb'),
     db = new Datastore({
         filename: './db/yep.json',
-        autoload: true // You can issue commands right away
+		autoload: true
     });
-
-
 
 
 router.get('/', function(req, res) {
 
-    if (req.query.user) {
+	if (req.query.user) {
 
-        db.find({ user: req.query.user }, function (err, docs) {
+		db.find({ user: req.query.user }, function (err, docs) {
 
-          if (!err && docs.length) {
+			if (!err && docs.length) {
 
-            res.json(docs);
+				res.json(docs);
 
-          } else {
+			} else {
 
-            res.send('no results')
+				res.send('no results')
 
-          }
-        });
+			}
+		})
 
-    } else {
-        res.send('supply a user')
-    }
+	} else {
+		res.send('supply a user')
+	}
 
 });
-
 
 
 router.post('/', function(req, res) {
@@ -47,22 +44,23 @@ router.post('/', function(req, res) {
 		if (!docs.length) {
 			//console.log('looks fresh, lets add it')
 
+			// add an array to store the achievements on each user
+			req.query.achievements = []
+
 			db.insert(req.query, function (err, newDoc) {
-		        // newDoc is the newly inserted document, including its _id
 
-		        if (err) {
-		            res.send(err);
-		        } else {
-		            res.send(newDoc)
-		        }
+				if (err) {
+					res.send(err);
+				} else {
+					res.send(newDoc)
+				}
 
-		    });
+			});
 
 		} else {
 			res.sendStatus(302) // 302 FOUND. user already exists
 		}
 	})
-
 
 });
 

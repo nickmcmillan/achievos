@@ -1,13 +1,11 @@
 let doc = document
 let host = window.location.href
 
-//chrome.storage.sync.clear()
-
 chrome.storage.sync.get('achievos', (obj) => {
 
 	// if it exists, add the saved username into the query string
 	let username = obj.achievos
-	let serviceUrl = 'http://localhost:3000/request?url=' + host + (username ? '&user=' + username : '')
+	let serviceUrl = 'http://localhost:8081/request?url=' + host + (username ? '&user=' + username : '')
 	let request = new XMLHttpRequest()
 
 	request.open('GET', serviceUrl)
@@ -53,7 +51,7 @@ function createNotification(username, response) {
 	pointsDiv.classList.add('achievos-points')
 
 	// give them content
-	titleAnchor.setAttribute('href', `https://www.achievos.xyz?user=${username}`)
+	titleAnchor.setAttribute('href', username ? `https://www.achievos.xyz?user=${username}` : 'https://www.achievos.xyz')
 	titleAnchor.setAttribute('target', '_blank')
 	let titleContent = doc.createTextNode(response.title)
 	let pointsContent = doc.createTextNode(username ? response.points + ' points' : 'Login to grab some points!')
@@ -129,13 +127,12 @@ function createNotification(username, response) {
 
 	setTimeout(function() {
 		wrapperDiv.classList.remove('achievos--visible')
-	}, 5000)
+	}, 8000)
 
 }
 
 
 // achievos website stuff
-
 // change classes on achievos website
 if (host.indexOf('localhost'.toLowerCase()) >= 0 || host.indexOf('achievos'.toLowerCase()) >= 0) {
 	doc.documentElement.classList.add('achievos-installed--true')
@@ -143,29 +140,41 @@ if (host.indexOf('localhost'.toLowerCase()) >= 0 || host.indexOf('achievos'.toLo
 }
 
 
-// this has to be there, but does nothing
-// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-// 	//console.log('message', message);
-//     //alert("message received");
-// });
-
-
-document.addEventListener('syncSet', function(e) {
-    //chrome.runtime.sendMessage("test");
+doc.addEventListener('syncSet', (e)=> {
 
 	let inputValue = doc.getElementById('email').value
 
 	// save user data
 	chrome.storage.sync.set({'achievos': inputValue}, function() {
-		console.log('saved to chrome.storage.sync')
+		//console.log('saved to chrome.storage.sync')
 	})
 
 })
 
-document.addEventListener('click', function(e) {
+doc.addEventListener('syncGet', (e)=> {
 
-	chrome.storage.sync.get('achievos', function(ok) {
-		console.log('ok', ok.achievos)
+	chrome.storage.sync.get('achievos',(ok)=> {
+
+		if (ok.achievos) {
+			doc.documentElement.classList.remove('user-set--false')
+			doc.documentElement.classList.add('user-set--true')
+			doc.getElementById('you').textContent = 'You\'re logged in as ' + ok.achievos
+
+		} else {
+			doc.documentElement.classList.remove('user-set--true')
+			doc.documentElement.classList.add('user-set--false')
+			doc.getElementById('you').textContent = 'Not logged in'
+		}
+
 	})
 
+})
+
+
+doc.addEventListener('resetStorage',()=> {
+	chrome.storage.sync.clear(()=>{
+		doc.documentElement.classList.remove('user-set--true')
+		doc.documentElement.classList.add('user-set--false')
+		doc.getElementById('you').textContent = 'not logged in'
+	})
 })
