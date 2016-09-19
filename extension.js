@@ -4,7 +4,7 @@ let host = window.location.href
 chrome.storage.sync.get('achievos', (obj) => {
 
 	// if it exists, add the saved username into the query string
-	let username = obj.achievos
+	let username = obj.achievos ? obj.achievos : null
 	let serviceUrl = 'http://localhost:8081/request?url=' + host + (username ? '&user=' + username : '')
 	let request = new XMLHttpRequest()
 
@@ -14,7 +14,7 @@ chrome.storage.sync.get('achievos', (obj) => {
 
 		let response = request.response;
 
-		//console.log(response);
+		console.log(response);
 
 		// if there's a response, we have a winner
 		if (!!response.title) {
@@ -159,6 +159,8 @@ doc.addEventListener('syncGet', (e)=> {
 			doc.documentElement.classList.remove('user-set--false')
 			doc.documentElement.classList.add('user-set--true')
 			doc.getElementById('you').textContent = 'You\'re logged in as ' + ok.achievos
+
+			console.log('time to render');
 
 		} else {
 			doc.documentElement.classList.remove('user-set--true')

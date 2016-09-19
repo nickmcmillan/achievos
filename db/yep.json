@@ -1,8 +1,4 @@
-{"user":"new@new.com","achievements":[{"default":false,"title":"Welcome to ZomboCom","url":"zombo.com","points":100},{"default":false,"title":"8 bit Rainbow Dogs!","url":"omfgdogs.com","points":50}],"_id":"076DuoT0Ip0ngWni"}
-{"user":"asdf@asdf.comf","achievements":[],"_id":"Ou5ZgtWKSAXRYdIL"}
-{"user":"asdf@asdf.com","achievements":[],"_id":"WVFU3c9g0AnuOvMu"}
-{"user":"asdf@adsf.com","achievements":[{"default":false,"title":"Welcome to ZomboCom","url":"zombo.com","points":100},{"default":false,"title":"8 bit Rainbow Dogs!","url":"omfgdogs.com","points":50}],"_id":"oMs0JQ1RIYcp7lco"}
-{"user":"nick@asdf.com","achievements":[{"default":false,"title":"The Front Page of the Internet","url":"reddit.com","points":80},{"default":false,"title":"Ducks Are The Best","url":"ducksarethebest.com","points":30},{"default":false,"title":"Welcome to ZomboCom","url":"zombo.com","points":100}],"_id":"vBoJYmN35YlmjufP"}
-{"user":"ENOCHOHOH@f.com","achievements":[{"default":false,"title":"Ducks Are The Best","url":"ducksarethebest.com","points":30}],"_id":"z7EtRL9iY5IcNXwr"}
-{"user":"nick@asdf.com","achievements":[{"default":false,"title":"The Front Page of the Internet","url":"reddit.com","points":80},{"default":false,"title":"Ducks Are The Best","url":"ducksarethebest.com","points":30},{"default":false,"title":"Welcome to ZomboCom","url":"zombo.com","points":100},{"default":false,"title":"8 bit Rainbow Dogs!","url":"omfgdogs.com","points":50}],"_id":"vBoJYmN35YlmjufP"}
-{"user":"nah@i.com","achievements":[],"_id":"QGc0Hq7QaNlAiUEQ"}
+{"user":"ok@fifi.com","achievements":[],"_id":"90cP5xGAtnEUZftw"}
+{"user":"test@balls.com","achievements":[{"title":"Welcome to ZomboCom","points":100}],"_id":"ER8zCVTOW7jf6NZR"}
+{"user":"cheeseybits@a","achievements":[],"_id":"kPqNLAjsRVIbdmDJ"}
+{"user":"asdf@asdf.com","achievements":[{"title":"8 bit Rainbow Dogs!"},{"title":"8 bit Rainbow Dogs!","points":50}],"_id":"wyBXGCKs4KySvNbP"}

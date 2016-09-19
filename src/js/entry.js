@@ -14,6 +14,7 @@ const notYou = function() {
 
 const showUser = function() {
 	console.log('showUser');
+	console.log('time to render');
 	// check if user exists already
 	let syncGetEvent = document.createEvent('Event');
 	syncGetEvent.initEvent('syncGet');

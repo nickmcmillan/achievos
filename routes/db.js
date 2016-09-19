@@ -6,10 +6,10 @@ var router = express.Router();
 
 // database
 var Datastore = require('nedb'),
-    db = new Datastore({
-        filename: './db/yep.json',
+	db = new Datastore({
+		filename: './db/yep.json',
 		autoload: true
-    });
+	});
 
 
 router.get('/', function(req, res) {
@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
 		})
 
 	} else {
-		res.send('supply a user')
+		res.send('That ain\'t working. Supply a user email address, eg db?user=asdf@asdf.com')
 	}
 
 });

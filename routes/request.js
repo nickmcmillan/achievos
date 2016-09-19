@@ -11,16 +11,13 @@ var Datastore = require('nedb'),
 	});
 
 
-
-
-
 router.get('/', function(req, res) {
 
 	if (!req.query.url) {
 		res.send('That ain\'t workin. This guy needs a url parameter. Like ?url=zombo.com')
 	}
 
-	let user = req.query.user
+	var user = req.query.user
 
 	var requestQuery = req.query.url.toLowerCase()
 	var successfulMatch = urls.filter(function(item) {
@@ -30,31 +27,26 @@ router.get('/', function(req, res) {
 
 	if (successfulMatch.length) {
 
-		let responseObj = {
-			default: !!successfulMatch[0].default,
+		console.log(successfulMatch);
+
+		//var achievementTitle = successfulMatch[0].title
+
+		var responseObj = {
+			//default: !!successfulMatch[0].default,
 			title: successfulMatch[0].title,
-			url: successfulMatch[0].url,
+			//url: successfulMatch[0].url,
 			points: successfulMatch[0].points
 		}
 
 		db.loadDatabase(function (err) {    // Callback is optional
 
-
-			db.update({user: user}, { $addToSet: { achievements: responseObj } } )
-
-			// db.find({}, function (err, docs) {
-			//
-			// 	console.log('all', docs);
-			//
-			// 	//res.send(JSON.stringify(docs))
-			//
-			//
-	        // });
+			db.update({user: user}, {
+				$addToSet: {
+					achievements: responseObj
+				}
+			})
 
 		});
-
-		// push the success into the users db\
-
 
 		res.send(JSON.stringify(responseObj))
 
