@@ -26,54 +26,18 @@ video {
   vertical-align: middle;
 }
 
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
+a {
+	text-decoration: none;
 }
 
-blockquote {
-  margin: 0;
+ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
-
-cite,
-address {
-  font-style: normal;
-}
-
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-  resize: vertical;
-}
-
-
 
 .container {
   max-width: $max-width;
   width: 100%;
-
-  // &:before,
-  // &:after {
-  //   content: " ";
-  //   display: table;
-  //   clear: both;
-  // }
-
-  // padding: {
-  //   left: $base-spacing / 2;
-  //   right: $base-spacing / 2;
-  // }
-
-  // margin: {
-  //   left: auto;
-  //   right: auto;
-  // }
 
 }

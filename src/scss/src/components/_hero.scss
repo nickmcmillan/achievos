@@ -1,16 +1,25 @@
 $padding-sm: 4vmin;
 $padding-lg: 2.5vmin;
 
-html {
-	border: $padding-sm solid #fff;
-}
 
 .hero {
 	padding: $padding-sm 10%;
 	display: flex;
 	flex-direction: column;
-	background-color: $grey-light;
-	height: 80vh;
+	position: relative;
+
+	&::after {
+		content: '';
+		position: fixed;
+		background-color: $grey-light;
+		height: 82vh;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: -10;
+		border: $padding-sm solid #fff;
+		will-change: transform;
+	}
 }
 
 .hero-title {
@@ -37,13 +46,58 @@ html {
 	margin-top: -3.5vmin;
 }
 
-@media (min-width: $screen-md) {
-	html {
-		border: $padding-lg solid #fff;
+.completed {
+	color: #2CD892;
+	animation: hue 5s infinite linear;
+
+	.progress--points::after {
+		color: inherit;
 	}
+}
+
+.progress--points {
+	position: absolute;
+
+	&::after {
+		content: 'pts';
+		font-size: 0.5em;
+		color: $grey-medium;
+	}
+}
+
+.progress--title-wrap {
+	position: relative;
+	left: 3em;
+}
+
+.progress--url {
+	display: block;
+	font-size: 0.75em;
+	margin-top: -1.5em;
+}
+
+.progress--result {
+	font-weight: bold;
+}
+
+@media (min-width: $screen-md) {
+	.hero {
+		//padding: $padding-lg 15%;
+		//max-width: 800px;
+	}
+}
+
+@media (min-width: $screen-lg) {
 
 	.hero {
 		padding: $padding-lg 15%;
+	    max-width: 70%;
+	    margin: 0 auto 0 0em;
+
+		&::after {
+			border: $padding-lg solid #fff;
+
+		}
 	}
 	.hero-title {
 		max-width: 40vmin;

@@ -1,4 +1,4 @@
-export function retrieve(username, callback) {
+export function retrieveUserData(username, callback) {
 
 
     const requestGet = new XMLHttpRequest();
@@ -23,11 +23,11 @@ export function retrieve(username, callback) {
 }
 
 
-export function post(username, callback) {
+export function postUserData(username, callback) {
 
     const requestPost = new XMLHttpRequest();
 
-    requestPost.open('POST', 'http://localhost:8081/db?user=' + username, true);
+    requestPost.open('POST', '/db?user=' + username, true);
     requestPost.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
 
     requestPost.onreadystatechange = function () {

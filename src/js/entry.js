@@ -1,7 +1,7 @@
 'use strict'
 
 import './utilities/isChromium'
-import {retrieve, post} from './db'
+import {retrieveUserData, postUserData} from './db'
 import {resetUserInExtension, getUserFromExtension, setCurrentUser} from './eventInits'
 import {render} from './render'
 
@@ -23,9 +23,10 @@ setTimeout(()=>{
 const setUserName = function(e) {
 
 	e.preventDefault()
-	let userValue = doc.getElementById('email').value
 
-	post(userValue, function(result) {
+	const userValue = doc.getElementById('email').value
+
+	postUserData(userValue, function(result) {
 
 		if (result === 200 || result === 302) {
 			setCurrentUser(userValue)
@@ -34,42 +35,43 @@ const setUserName = function(e) {
 		}
 
 		if (result === 'err') {
-			doc.getElementById('form--set-user-output').textContent = 'Problems.'
-			return
+			doc.getElementById('form--set-user-output').textContent = `Problems. ${result}.`
 		}
 
 	})
 
 }
 
-const renderResults = function(username) {
-
-	retrieve(username, function(result) {
-
-		if (result !== 'err') {
-			//console.log(result);
-			render(result.achievements)
-
-		} else {
-			console.log('fail on server')
-		}
-
-
-	})
-
-}
 
 doc.addEventListener('loginEvent', (e) => {
-
 
 	// if the user is logged in
 	if (e.detail) {
 		console.log('loginEvent', e.detail);
 		doc.documentElement.classList.remove('user-set--false')
 		doc.documentElement.classList.add('user-set--true')
-		doc.getElementById('you').textContent = 'You\'ve logged in as ' + e.detail
 
-		renderResults(e.detail)
+		const p = doc.getElementById('you')
+
+		p.textContent = `You've logged in as ${e.detail}. `
+
+		const button = document.createElement('button')
+		button.classList.add('button-inline')
+		button.textContent = 'Not you?'
+		button.addEventListener('click', resetUserInExtension, false)
+
+		p.appendChild(button)
+
+		retrieveUserData(e.detail, function(result) {
+
+			if (result !== 'err') {
+				render(result.achievements)
+			} else {
+				console.log('fail on server')
+			}
+
+		})
+
 
 	} else {
 		doc.documentElement.classList.remove('user-set--true')
@@ -79,9 +81,8 @@ doc.addEventListener('loginEvent', (e) => {
 
 })
 
-doc.getElementById('form--set-user').addEventListener("submit", setUserName, false)
-doc.getElementById('form--not-chrome').addEventListener("submit", setUserName, false)
-doc.getElementById('resetStorage').addEventListener("click", resetUserInExtension, false)
+doc.getElementById('form--set-user').addEventListener('submit', setUserName, false)
+doc.getElementById('form--not-chrome').addEventListener('submit', setUserName, false)
 
 
 doc.getElementById('add-to-chrome').addEventListener('click', function(e) {

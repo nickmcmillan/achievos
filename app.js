@@ -36,13 +36,15 @@ app.use('/build', express.static(path.join(__dirname, 'build')));
 //var routes = require('./routes/index');
 var request = require('./routes/request');
 var db = require('./routes/db');
-var all = require('./routes/all');
+var users = require('./routes/users');
+var sites = require('./routes/sites');
 
 
 //app.use('/', routes);
 app.use('/request', request);
 app.use('/db', db);
-app.use('/all', all);
+app.use('/users', users);
+app.use('/sites', sites);
 
 
 var env = {

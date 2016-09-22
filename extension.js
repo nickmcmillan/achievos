@@ -34,14 +34,14 @@ chrome.storage.sync.get('achievos', (obj) => {
 function createNotification(username, response) {
 
 	// generate elements
-	let wrapperDiv = doc.createElement('div')
-	let titleAnchor = doc.createElement('a')
-	let contentDiv = doc.createElement('div')
-	let pointsDiv = doc.createElement('div')
-	let iconDiv = doc.createElement('div');
+	const wrapperDiv = doc.createElement('div')
+	const titleAnchor = doc.createElement('a')
+	const contentDiv = doc.createElement('div')
+	const pointsDiv = doc.createElement('div')
+	const iconDiv = doc.createElement('div');
 
 	// create the icon http://www.flaticon.com/free-icon/achievement_142733
-	let svgString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 485 485" xml:space="preserve"><path d="M257.5 217.1V0H104.5v131.3H227.5v85.8L0 462.9V485h485v-22.1L257.5 217.1zM314.9 323.3l-24.9 18 -47.5-34.2 -47.5 34.2 -24.9-18 72.4-78.2L314.9 323.3zM134.5 101.3V30h93v71.3H134.5zM48.2 455l101.3-109.5 45.5 32.8 47.5-34.2 47.5 34.2 45.5-32.8L436.8 455H48.2z"/></svg>'
+	const svgString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="0 0 485 485" xml:space="preserve"><path d="M257.5 217.1V0H104.5v131.3H227.5v85.8L0 462.9V485h485v-22.1L257.5 217.1zM314.9 323.3l-24.9 18 -47.5-34.2 -47.5 34.2 -24.9-18 72.4-78.2L314.9 323.3zM134.5 101.3V30h93v71.3H134.5zM48.2 455l101.3-109.5 45.5 32.8 47.5-34.2 47.5 34.2 45.5-32.8L436.8 455H48.2z"/></svg>'
 	iconDiv.innerHTML = svgString
 
 	// give them classes
@@ -71,21 +71,22 @@ function createNotification(username, response) {
 	.achievos {
 		display: flex;
 		position: fixed;
-		top: 15px;
-		left: 15px;
+		top: 20px;
+		left: 20px;
 		color: #333;
 		background-color: rgba(255, 255, 255, 0.9);
 		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		line-height: 1;
-		padding: 10px;
-		max-width: 200px;
+		padding: 20px;
+		max-width: 300px;
 		border-radius: 2px;
 		font-size: 16px;
 		backdrop-filter: blur(3px) saturate(200%);
 		border: 1px solid rgba(210,210,210,0.7);
 		z-index: 1999999999;
 		opacity: 0;
-		transform: scale(0.80);
+		transform: scale(0.96);
+		text-align: left;
 		visibility: hidden;
 		transition: transform 200ms cubic-bezier(0.65, 0.05, 0.14, 1.7), opacity 200ms, visibility 200ms, backdrop-filter 800ms;
 		will-change: opacity, transform, visibility, backdrop-filter;
@@ -126,7 +127,7 @@ function createNotification(username, response) {
 	}, 500)
 
 	setTimeout(function() {
-		wrapperDiv.classList.remove('achievos--visible')
+		//wrapperDiv.classList.remove('achievos--visible')
 	}, 8000)
 
 }
@@ -172,5 +173,6 @@ doc.addEventListener('extResetStorage',()=> {
 		doc.documentElement.classList.remove('user-set--true')
 		doc.documentElement.classList.add('user-set--false')
 		doc.getElementById('you').textContent = ''
+		doc.getElementById('progress').textContent = ''
 	})
 })

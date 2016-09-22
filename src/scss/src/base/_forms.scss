@@ -48,8 +48,13 @@ textarea {
 	padding: 0 $input-padding;
 	line-height: 2.5;
 	width: 100%;
-	transition: background-color $timing*2 cubic-bezier(0.25,0.46,0.45,0.94);
+	max-width: 99%;
+	transition: background-color $timing cubic-bezier(0.25,0.46,0.45,0.94);
     will-change: background-color;
+
+	&:hover {
+		background-color: lighten($grey-dark, 5%);
+	}
 
 	&:focus {
 		outline: 0;
@@ -132,29 +137,3 @@ textarea {
 // 		}
 // 	}
 // }
-
-@media (min-width: $screen-md) {
-	.form {
-		max-width: 770px;
-		//display: flex;
-		//align-items: baseline;
-
-
-
-	}
-
-	input,
-	select,
-	textarea {
-		padding: $base-spacing;
-
-	}
-
-	input,
-	.select-wrapper,
-	textarea {
-		max-width: 470px;
-	}
-
-
-}

@@ -2,8 +2,6 @@
 
 var express = require('express')
 var router = express.Router()
-var urls = require('./urls')
-
 
 var Datastore = require('nedb'),
 	db = new Datastore({

@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
 		return requestQuery.indexOf(item.url.toLowerCase()) >= 0
 	})
 
-	console.log(successfulMatch);
+	//console.log('suc', successfulMatch);
 
 	if (successfulMatch.length) {
 
@@ -35,13 +35,11 @@ router.get('/', function(req, res) {
 
 		var responseObj = {
 			title: successfulMatch[0].title,
-			//url: successfulMatch[0].url,
+			url: successfulMatch[0].url,
 			points: successfulMatch[0].points
 		}
 
 		db.loadDatabase(function (err) {
-
-			//console.log('r', responseObj);
 
 			db.update({user: user}, {
 				$addToSet: {

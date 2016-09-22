@@ -42,8 +42,9 @@ a {
 
 }
 
-p {
-	padding: 0 0 $base-spacing;// * 1.5;
+p,
+label {
+	padding: 0 0 1.5em;// * 1.5;
 	margin: 0;
     line-height: 1.75;
 	hyphens: auto;

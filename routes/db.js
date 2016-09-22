@@ -48,7 +48,7 @@ router.post('/', function(req, res) {
 	// check for existing user already
 	db.find(req.query, function(err, docs) {
 
-		console.log('docs', docs);
+		//console.log('docs', docs);
 
 		if (docs.length) {
 
