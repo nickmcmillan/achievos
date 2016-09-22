@@ -7,27 +7,34 @@ var router = express.Router();
 // database
 var Datastore = require('nedb'),
 	db = new Datastore({
-		filename: './db/yep.json',
-		autoload: true
+		filename: './db/yep.json'
 	});
 
 
 router.get('/', function(req, res) {
 
-	if (req.query.user) {
+	// lets just be careful, make sure we only continue if the query string is a string
+	if (typeof req.query.user === 'string') {
 
-		db.find({ user: req.query.user }, function (err, docs) {
+		db.loadDatabase(function (err) {
 
-			if (!err && docs.length) {
+			db.find({ user: req.query.user.toLowerCase() }, function (err, docs) {
 
-				res.json(docs);
+				if (!err && docs.length) {
 
-			} else {
+					// send the first result, seeing as you can only have one username, so an array is pointless
+					res.json(docs[0])
 
-				res.send('no results')
+				} else {
 
-			}
-		})
+					res.send('That user doesn\'t exist.')
+
+				}
+			})
+
+		});
+
+
 
 	} else {
 		res.send('That ain\'t working. Supply a user email address, eg db?user=asdf@asdf.com')
@@ -41,7 +48,13 @@ router.post('/', function(req, res) {
 	// check for existing user already
 	db.find(req.query, function(err, docs) {
 
-		if (!docs.length) {
+		console.log('docs', docs);
+
+		if (docs.length) {
+
+			res.sendStatus(302) // 302 FOUND. user already exists
+
+		} else {
 			//console.log('looks fresh, lets add it')
 
 			// add an array to store the achievements on each user
@@ -57,8 +70,6 @@ router.post('/', function(req, res) {
 
 			});
 
-		} else {
-			res.sendStatus(302) // 302 FOUND. user already exists
 		}
 	})
 

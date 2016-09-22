@@ -2,74 +2,34 @@
 
 import './utilities/isChromium'
 import {retrieve, post} from './db'
+import {resetUserInExtension, getUserFromExtension, setCurrentUser} from './eventInits'
+import {render} from './render'
 
-let doc = document
 
-const notYou = function() {
-	console.log('reset');
-	let resetStorage = document.createEvent('Event');
-	resetStorage.initEvent('resetStorage');
-	doc.dispatchEvent(resetStorage);
-}
+const doc = document
 
-const showUser = function() {
-	console.log('showUser');
-	console.log('time to render');
-	// check if user exists already
-	let syncGetEvent = document.createEvent('Event');
-	syncGetEvent.initEvent('syncGet');
-	doc.dispatchEvent(syncGetEvent);
-}
-
-const setUser = function() {
-	console.log('setUser');
-	// looking good, now we push to extension storage sync
-	let syncSetEvent = document.createEvent('Event');
-	syncSetEvent.initEvent('syncSet');
-	doc.dispatchEvent(syncSetEvent);
-
-	doc.getElementById('form--set-user-output').textContent = ''
-}
-
-// wait a bit before showing content, so the extension (if installed) can update classes on the html node
+// wait a bit before showing content, so the extension (if installed)
+// can update classes on the html node in the background
 setTimeout(()=>{
 
 	doc.documentElement.classList.add('load-timeout')
 
-	showUser()
-
+	// first thing to do is see if the user is logged in
+	getUserFromExtension()
 
 }, 500)
 
 
-let checkUserName = function() {
-
-}
-
-
-
-let setUserName = function(e) {
+const setUserName = function(e) {
 
 	e.preventDefault()
 	let userValue = doc.getElementById('email').value
 
-	// add a new user to the db, if successful, set a cookie
 	post(userValue, function(result) {
 
-		if (result === 'success') {
-
-			setUser()
-
-			// now update the view
-			showUser()
-
-			return
-		}
-
-		if (result === 302) {
-			setUser()
-			showUser()
-			//doc.getElementById('form--set-user-output').textContent = 'That username already exists'
+		if (result === 200 || result === 302) {
+			setCurrentUser(userValue)
+			getUserFromExtension()
 			return
 		}
 
@@ -82,18 +42,53 @@ let setUserName = function(e) {
 
 }
 
+const renderResults = function(username) {
+
+	retrieve(username, function(result) {
+
+		if (result !== 'err') {
+			//console.log(result);
+			render(result.achievements)
+
+		} else {
+			console.log('fail on server')
+		}
+
+
+	})
+
+}
+
+doc.addEventListener('loginEvent', (e) => {
+
+
+	// if the user is logged in
+	if (e.detail) {
+		console.log('loginEvent', e.detail);
+		doc.documentElement.classList.remove('user-set--false')
+		doc.documentElement.classList.add('user-set--true')
+		doc.getElementById('you').textContent = 'You\'ve logged in as ' + e.detail
+
+		renderResults(e.detail)
+
+	} else {
+		doc.documentElement.classList.remove('user-set--true')
+		doc.documentElement.classList.add('user-set--false')
+		doc.getElementById('you').textContent = ''
+	}
+
+})
 
 doc.getElementById('form--set-user').addEventListener("submit", setUserName, false)
 doc.getElementById('form--not-chrome').addEventListener("submit", setUserName, false)
-
-doc.getElementById('resetStorage').addEventListener("click", notYou, false)
-
+doc.getElementById('resetStorage').addEventListener("click", resetUserInExtension, false)
 
 
-// document.getElementById('add-to-chrome').addEventListener('click', function(e) {
-// 	chrome.webstore.install('apdfllckaahabafndbhieahigkjlhalf', function() {
-// 		console.log('install');
-// 	}), function() {
-// 		console.log('fail install')
-// 	}
-// })
+doc.getElementById('add-to-chrome').addEventListener('click', function(e) {
+
+	chrome.webstore.install('apdfllckaahabafndbhieahigkjlhalf', function() {
+		console.log('install');
+	}), function() {
+		console.log('fail install')
+	}
+})

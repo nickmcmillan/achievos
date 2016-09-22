@@ -33,13 +33,13 @@ app.use('/', express.static(path.join(__dirname, 'views')));
 app.use('/build', express.static(path.join(__dirname, 'build')));
 
 
-var routes = require('./routes/index');
+//var routes = require('./routes/index');
 var request = require('./routes/request');
 var db = require('./routes/db');
 var all = require('./routes/all');
 
 
-app.use('/', routes);
+//app.use('/', routes);
 app.use('/request', request);
 app.use('/db', db);
 app.use('/all', all);

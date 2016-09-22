@@ -1,34 +1,36 @@
-export function retrieve(user) {
+export function retrieve(username, callback) {
 
-    let requestGet = new XMLHttpRequest();
 
-	requestGet.open('GET', '/db?user=' + user, true);
+    const requestGet = new XMLHttpRequest();
+
+	requestGet.open('GET', '/db?user=' + username, true);
 
     requestGet.onload = function() {
 
         if (requestGet.status >= 200 && requestGet.status < 400) {
-            console.log(requestGet.responseText)
-
+			callback(JSON.parse(requestGet.responseText))
         } else {
-            console.log('fail')
+			callback('err')
         }
     };
+
+	requestGet.onerror = function() {
+		callback('err')
+	}
 
 	requestGet.send();
 
 }
 
 
-export function post(user, callback) {
+export function post(username, callback) {
 
-    let requestPost = new XMLHttpRequest();
+    const requestPost = new XMLHttpRequest();
 
-    requestPost.open('POST', 'http://localhost:8081/db?user=' + user, true);
+    requestPost.open('POST', 'http://localhost:8081/db?user=' + username, true);
     requestPost.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
 
     requestPost.onreadystatechange = function () {
-
-		//console.log(requestPost.status);
 
         // readystate 4 means 'complete'
         // status 200 means 'ok'
@@ -45,7 +47,7 @@ export function post(user, callback) {
         if (requestPost.responseText !== 'err') {
             // all good in the hood
             //console.log(requestPost.responseText);
-			callback('success')
+			callback(200)
         }
 
     };

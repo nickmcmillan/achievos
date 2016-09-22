@@ -1,7 +1,6 @@
 // store user agent checks here and export them, that way they're only ever checked once
 import {globalEls} from '../utilities/global-els';
 
-
 let navPlatform = navigator.platform,
 
     userAgents = {

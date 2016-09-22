@@ -12,7 +12,7 @@ var Datastore = require('nedb'),
 
 router.get('/', function(req, res) {
 
-	db.loadDatabase(function (err) {    // Callback is optional
+	db.loadDatabase(function (err) {
 
 		db.find({}, function (err, docs) {
 

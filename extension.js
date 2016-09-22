@@ -1,23 +1,23 @@
-let doc = document
-let host = window.location.href
+const doc = document
+const host = window.location.href
 
 chrome.storage.sync.get('achievos', (obj) => {
 
 	// if it exists, add the saved username into the query string
-	let username = obj.achievos ? obj.achievos : null
-	let serviceUrl = 'http://localhost:8081/request?url=' + host + (username ? '&user=' + username : '')
-	let request = new XMLHttpRequest()
+	const username = obj.achievos ? obj.achievos : null
+	const serviceUrl = `http://localhost:8081/request?url=${host}${username ? '&user=' + username : ''}`
+	const request = new XMLHttpRequest()
 
 	request.open('GET', serviceUrl)
 	request.responseType = 'json'
 	request.onload = function() {
 
-		let response = request.response;
+		const response = request.response;
 
-		console.log(response);
+		console.log('from service', response);
 
 		// if there's a response, we have a winner
-		if (!!response.title) {
+		if (!!response) {
 			doc.body.onload = createNotification(username, response)
 		}
 
@@ -140,43 +140,37 @@ if (host.indexOf('localhost'.toLowerCase()) >= 0 || host.indexOf('achievos'.toLo
 }
 
 
-doc.addEventListener('syncSet', (e)=> {
+doc.addEventListener('extSetCurrentUser', (e)=> {
 
-	let inputValue = doc.getElementById('email').value
+	const username = e.detail
 
 	// save user data
-	chrome.storage.sync.set({'achievos': inputValue}, function() {
+	chrome.storage.sync.set({'achievos': username}, function() {
 		//console.log('saved to chrome.storage.sync')
 	})
 
 })
 
-doc.addEventListener('syncGet', (e)=> {
+
+doc.addEventListener('extGetCurrentUser', (e)=> {
 
 	chrome.storage.sync.get('achievos',(ok)=> {
 
-		if (ok.achievos) {
-			doc.documentElement.classList.remove('user-set--false')
-			doc.documentElement.classList.add('user-set--true')
-			doc.getElementById('you').textContent = 'You\'re logged in as ' + ok.achievos
+		const event = new CustomEvent('loginEvent', {
+			'detail': ok.achievos ? ok.achievos : null
+		});
 
-			console.log('time to render');
-
-		} else {
-			doc.documentElement.classList.remove('user-set--true')
-			doc.documentElement.classList.add('user-set--false')
-			doc.getElementById('you').textContent = 'Not logged in'
-		}
+		document.dispatchEvent(event)
 
 	})
 
 })
 
 
-doc.addEventListener('resetStorage',()=> {
+doc.addEventListener('extResetStorage',()=> {
 	chrome.storage.sync.clear(()=>{
 		doc.documentElement.classList.remove('user-set--true')
 		doc.documentElement.classList.add('user-set--false')
-		doc.getElementById('you').textContent = 'not logged in'
+		doc.getElementById('you').textContent = ''
 	})
 })
