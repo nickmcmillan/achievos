@@ -52,15 +52,19 @@ doc.addEventListener('loginEvent', (e) => {
 		doc.documentElement.classList.add('user-set--true')
 
 		const p = doc.getElementById('you')
-
 		p.textContent = `You've logged in as ${e.detail}. `
 
-		const button = document.createElement('button')
+		const button = doc.createElement('button')
 		button.classList.add('button-inline')
 		button.textContent = 'Not you?'
 		button.addEventListener('click', resetUserInExtension, false)
 
+		const introSpan = doc.createElement('span')
+		introSpan.textContent = ` As you discover stuff you'll get notifications, and this list of clues will show your progress.`
+		introSpan.classList.add('intro-span')
+
 		p.appendChild(button)
+		p.appendChild(introSpan)
 
 		retrieveUserData(e.detail, function(result) {
 
@@ -85,10 +89,13 @@ doc.getElementById('form--set-user').addEventListener('submit', setUserName, fal
 
 doc.getElementById('add-to-chrome').addEventListener('click', function(e) {
 
-	chrome.webstore.install('https://chrome.google.com/webstore/detail/oeipblidclcamkmmlpleogoghpedcllg', function(e) {
+	chrome.webstore.install('', function(e) {
 		console.log('install', e);
 		doc.documentElement.classList.add('achievos-installed--true')
 		doc.documentElement.classList.remove('achievos-installed--false')
+		doc.documentElement.classList.remove('user-set--true')
+		doc.documentElement.classList.add('user-set--false')
+		doc.getElementById('you').textContent = ''
 
 	}), function(e) {
 		console.log('fail install', e)

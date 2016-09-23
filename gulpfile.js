@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
+var minifyify = require('minifyify');
 var htmlreplace = require('gulp-html-replace');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
@@ -50,6 +51,7 @@ bundler.transform(babelify.configure({
 }));
 
 
+
 // On updates recompile
 bundler.on('update', bundle);
 
@@ -68,6 +70,31 @@ function bundle() {
 		.pipe(gulp.dest('./build'))
 		.pipe(browserSyncCreate.stream({once: true}));
 }
+
+gulp.task('jsBuild', function () {
+
+	var buildBundler = browserify({debug: true})
+
+	buildBundler.add('./src/js/entry.js')
+
+
+	buildBundler.plugin(minifyify, {
+		//map: './build/bundle.cheese.map',
+		minify: false,
+		output: './build/bundle.thing.js'
+	});
+	console.log(minifyify.options);
+
+	return buildBundler
+		.bundle()
+		.on('error', function (err) {
+			gutil.log(err.message);
+			browserSyncCreate.notify("Browserify Error!");
+			this.emit("end");
+		})
+
+});
+
 
 /**
 * Gulp task alias
@@ -95,13 +122,11 @@ gulp.task('serve', ['sass', 'bundle'], function() {
 
 
 
-
-
-gulp.task('images', function(){
-    return gulp.src('./src/images/**')
-        .pipe(imagemin())
-        .pipe(gulp.dest('./build/images'));
-});
+// gulp.task('images', function(){
+//     return gulp.src('./src/images/**')
+//         .pipe(imagemin())
+//         .pipe(gulp.dest('./build/images'));
+// });
 
 
 gulp.task('sass', function() {
@@ -114,7 +139,7 @@ gulp.task('sass', function() {
 		}))
 		.pipe(concatCss('styles.css'))
 		.pipe(csso({
-			restructure: false,
+			restructure: true,
 			sourceMap: true,
 			debug: true
 		}))

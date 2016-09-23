@@ -24,7 +24,6 @@ $padding-lg: 2.5vmin;
 
 .hero-title {
 	max-width: 50vmin;
-//	outline: 1px solid blue;
 }
 
 .hero-icon {
@@ -44,6 +43,7 @@ $padding-lg: 2.5vmin;
 }
 .hero-content {
 	margin-top: -3.5vmin;
+	max-width: 860px;
 }
 
 .completed {
@@ -80,19 +80,23 @@ $padding-lg: 2.5vmin;
 	font-weight: bold;
 }
 
-@media (min-width: $screen-md) {
-	.hero {
-		//padding: $padding-lg 15%;
-		//max-width: 800px;
-	}
+// @media (min-width: $screen-md) {
+// 	.hero {
+// 		//padding: $padding-lg 15%;
+// 		//max-width: 800px;
+// 	}
+// }
+
+
+.intro-span {
+	display: block;
 }
 
 @media (min-width: $screen-lg) {
 
 	.hero {
 		padding: $padding-lg 15%;
-	    max-width: 70%;
-	    margin: 0 auto 0 0em;
+	    margin: 0 auto;
 
 		&::after {
 			border: $padding-lg solid #fff;
@@ -101,8 +105,10 @@ $padding-lg: 2.5vmin;
 	}
 	.hero-title {
 		max-width: 40vmin;
+	    padding-top: $padding-lg;
 	}
 	.hero-header {
+		margin: -0.5em 0 0.2em;
 	    font-size: 9.35vmin;
 	}
 
