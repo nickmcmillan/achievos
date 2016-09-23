@@ -67,7 +67,7 @@ doc.addEventListener('loginEvent', (e) => {
 			if (result !== 'err') {
 				render(result.achievements)
 			} else {
-				console.log('fail on server')
+				console.log('fail on server', result)
 			}
 
 		})
@@ -82,14 +82,15 @@ doc.addEventListener('loginEvent', (e) => {
 })
 
 doc.getElementById('form--set-user').addEventListener('submit', setUserName, false)
-doc.getElementById('form--not-chrome').addEventListener('submit', setUserName, false)
-
 
 doc.getElementById('add-to-chrome').addEventListener('click', function(e) {
 
-	chrome.webstore.install('apdfllckaahabafndbhieahigkjlhalf', function() {
-		console.log('install');
-	}), function() {
-		console.log('fail install')
+	chrome.webstore.install('https://chrome.google.com/webstore/detail/oeipblidclcamkmmlpleogoghpedcllg', function(e) {
+		console.log('install', e);
+		doc.documentElement.classList.add('achievos-installed--true')
+		doc.documentElement.classList.remove('achievos-installed--false')
+
+	}), function(e) {
+		console.log('fail install', e)
 	}
 })

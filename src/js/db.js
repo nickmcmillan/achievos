@@ -10,12 +10,12 @@ export function retrieveUserData(username, callback) {
         if (requestGet.status >= 200 && requestGet.status < 400) {
 			callback(JSON.parse(requestGet.responseText))
         } else {
-			callback('err')
+			callback('err', requestGet.responseText)
         }
     };
 
 	requestGet.onerror = function() {
-		callback('err')
+		callback('err', requestGet.responseText)
 	}
 
 	requestGet.send();
@@ -53,7 +53,7 @@ export function postUserData(username, callback) {
     };
 
 	requestPost.onerror = function() {
-		callback('err')
+		callback('err', requestPost.responseText)
 	}
 
 

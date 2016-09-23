@@ -7,8 +7,10 @@ var router = express.Router();
 // database
 var Datastore = require('nedb'),
 	db = new Datastore({
-		filename: './db/yep.json'
+		filename: './db/yep.json',
+		autoload: true // You can issue commands right away
 	});
+
 
 
 router.get('/', function(req, res) {
@@ -23,11 +25,11 @@ router.get('/', function(req, res) {
 				if (!err && docs.length) {
 
 					// send the first result, seeing as you can only have one username, so an array is pointless
-					res.json(docs[0])
+					res.json(docs[0]);
 
 				} else {
 
-					res.send('That user doesn\'t exist.')
+					res.sendStatus(404);
 
 				}
 			})

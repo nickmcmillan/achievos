@@ -8,6 +8,11 @@
 	"externally_connectable": {
 		"matches": ["*://localhost/*", "*://achievos.xyz/*"]
 	},
+	"icons": {
+		"32": "icon32.png",
+		"64": "icon64.png",
+		"128": "icon128.png"
+	},
 	"permissions": [
 		"storage"
 	],

@@ -9,29 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-	<link rel="chrome-webstore-item"
-	    href="https://chrome.google.com/webstore/detail/apdfllckaahabafndbhieahigkjlhalf">
+	<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/oeipblidclcamkmmlpleogoghpedcllg">
 
+	<% if (env.production) { %>
+		<link rel="stylesheet" href="/build/styles.css">
+	<% } else { %>
+		<link rel="stylesheet" href="/build/styles.css">
+	<% } %>
 
-      <% if (env.production) { %>
-        <link rel="stylesheet" href="/build/styles.min.css">
-      <% } else { %>
-        <link rel="stylesheet" href="/build/styles.css">
-      <% } %>
 
   </head>
 
   <body>
 
-    <%- include header.ejs %>
+	<%- include main.ejs %>
 
-    <%- body %>
-
-    <% if (env.production) { %>
-      <script async src="<%= env.assets.bundle.js %>"></script>
-    <% } else { %>
-      <script src="/build/bundle.js"></script>
-    <% } %>
+	<% if (env.production) { %>
+		<script src="/build/bundle.js"></script>
+	<% } else { %>
+		<script src="/build/bundle.js"></script>
+	<% } %>
 
   </body>
 </html>

@@ -1,11 +1,14 @@
+const local = false
+
 const doc = document
 const host = window.location.href
+const environment = local ? 'http://localhost:8081' : 'https://www.achievos.xyz'
 
 chrome.storage.sync.get('achievos', (obj) => {
 
 	// if it exists, add the saved username into the query string
 	const username = obj.achievos ? obj.achievos : null
-	const serviceUrl = `http://localhost:8081/request?url=${host}${username ? '&user=' + username : ''}`
+	const serviceUrl = `${environment}/request?url=${host}${username ? '&user=' + username : ''}`
 	const request = new XMLHttpRequest()
 
 	request.open('GET', serviceUrl)
@@ -14,7 +17,7 @@ chrome.storage.sync.get('achievos', (obj) => {
 
 		const response = request.response;
 
-		console.log('from service', response);
+		//console.log('from service', response);
 
 		// if there's a response, we have a winner
 		if (!!response) {
@@ -51,7 +54,7 @@ function createNotification(username, response) {
 	pointsDiv.classList.add('achievos-points')
 
 	// give them content
-	titleAnchor.setAttribute('href', username ? `https://www.achievos.xyz?user=${username}` : 'https://www.achievos.xyz')
+	titleAnchor.setAttribute('href', 'https://www.achievos.xyz')
 	titleAnchor.setAttribute('target', '_blank')
 	let titleContent = doc.createTextNode(response.title)
 	let pointsContent = doc.createTextNode(username ? response.points + ' points' : 'Login to grab some points!')
@@ -127,7 +130,7 @@ function createNotification(username, response) {
 	}, 500)
 
 	setTimeout(function() {
-		//wrapperDiv.classList.remove('achievos--visible')
+		wrapperDiv.classList.remove('achievos--visible')
 	}, 8000)
 
 }
