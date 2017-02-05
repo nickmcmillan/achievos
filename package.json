@@ -4,7 +4,7 @@
   "description": "Get achievements for discovering websites",
   "main": "app.js",
   "scripts": {
-    "serve": " gulp",
+    "start": " gulp",
     "server": "gulp server",
 	"jsMinify": "browserify ./src/js/entry.js -d -p [minifyify --map ./build/bundle.biscuit.js.map --output ./build/bundle.biscuit.js.map] > ./build/bundle.biscuit.js",
     "build": "gulp build && npm run jsMinify",

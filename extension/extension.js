@@ -17,10 +17,8 @@ chrome.storage.sync.get('achievos', (obj) => {
 
 		const response = request.response;
 
-		//console.log('from service', response);
-
 		// if there's a response, we have a winner
-		if (!!response) {
+		if (response.url) {
 			doc.body.onload = createNotification(username, response)
 		}
 

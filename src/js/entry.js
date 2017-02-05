@@ -90,7 +90,7 @@ doc.getElementById('form--set-user').addEventListener('submit', setUserName, fal
 doc.getElementById('add-to-chrome').addEventListener('click', function(e) {
 
 	chrome.webstore.install('', function(e) {
-		console.log('install', e);
+		//console.log('install', e);
 		doc.documentElement.classList.add('achievos-installed--true')
 		doc.documentElement.classList.remove('achievos-installed--false')
 		doc.documentElement.classList.remove('user-set--true')
