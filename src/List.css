@@ -1,0 +1,34 @@
+.item {
+    position: relative;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.success {
+    color: #fff;
+}
+
+.success .clue {
+    text-decoration: line-through;
+}
+
+.itemInner {
+    margin-left: 4rem;
+}
+
+.url {
+    color: #3f3f3f;
+}
+
+.points {
+    position: absolute;
+    top: 0;
+    display: block;
+    line-height: 1;
+}
+
+.points::after {
+    content: 'pts';
+    font-size: 0.7rem;
+    color: #3f3f3f;
+}

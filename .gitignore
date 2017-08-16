@@ -1,5 +1,5 @@
-node_modules
+dist
 build
-
-#this is where the secrets are!
-routes/urls.js
+node_modules
+npm-debug.log
+.sass-cache

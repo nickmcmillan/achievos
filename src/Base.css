@@ -1,0 +1,88 @@
+@import 'https://fonts.googleapis.com/css?family=Rasa:500|Secular+One';
+
+html {
+    min-height: 100%;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-family: 'Rasa', serif;
+    font-size: 5.5vmin;
+    user-select: none;
+    border: 0.5em solid #fff;
+    background-color: linear-gradient(to right, rgb(222, 98, 98), rgb(255, 184, 140));
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    line-height: 1.5;
+    letter-spacing: -.2px;
+    font-variant-ligatures: common-ligatures;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration-skip: ink;
+    color: #fff;
+    background: linear-gradient(to right, rgb(222, 98, 98), rgb(255, 184, 140));
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+button {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+::-webkit-input-placeholder {
+    color: #fff;
+}
+
+:-moz-placeholder {
+    color: #fff;
+}
+
+:-ms-input-placeholder {
+    color: #fff;
+}
+
+/* Place Holder CSS for Focus */
+:focus::-webkit-input-placeholder {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+:focus:-moz-placeholder {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+:focus:-ms-input-placeholder {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+@media (min-width: 1100px) {
+    html {
+        font-size: 200%;
+    }
+}

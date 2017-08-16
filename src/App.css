@@ -1,0 +1,116 @@
+.main {
+    padding-bottom: 1rem;
+}
+
+.button {
+    color: #fff;
+    background-color: #3f3f3f;
+    padding: 0 1rem;
+    text-decoration: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 2.5;
+    transition: opacity 300ms cubic-bezier(.25,.46,.45,.94), transform 75ms cubic-bezier(.25,.46,.45,.94);
+    will-change: opacity, transform;
+}
+
+.button:hover,
+.button:focus {
+    opacity: 0.85;
+    outline: 0;
+}
+.button:active {
+    transform: scale(0.96);
+}
+
+.buttonInline {
+    color: #3f3f3f;
+    //font-weight: 700;
+    transition: color 200ms;
+}
+.buttonInline:hover,
+.buttonInline:focus {
+    text-decoration: underline;
+    outline: 0;
+}
+
+.title {
+    padding: 0;
+    font-weight: 400;
+    font-family: 'Secular One',sans-serif;
+    font-feature-settings: 'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;
+    font-size: 11.75vmin;
+    letter-spacing: 0;
+    margin: 0 0 0.5rem;
+}
+
+.plaque {
+    //position: fixed;
+    //width: 100%;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+.logo {
+    max-width: 50vmin;
+}
+
+
+.intro {
+    padding-bottom: 1rem;
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    line-height: 2.5;
+}
+
+.input {
+    line-height: 2.5;
+    background-color: #3f3f3f;
+    color: #fff;
+    border: 0;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    width: 100%;
+    transition: opacity 300ms cubic-bezier(.25,.46,.45,.94);
+    will-change: opacity;
+}
+.input:hover,
+.input:focus {
+    opacity: 0.85;
+    outline: 0;
+}
+
+.content {
+    padding: 0 1rem;
+}
+
+@media (min-width: 1100px) {
+
+    .main {
+        display: flex;
+    }
+
+    .plaque {
+        height: 80vh;
+        transform: scale(0.75);
+    }
+
+    .logo {
+        max-width: 100%;
+        padding-bottom: 1rem;
+    }
+
+    .content {
+        width: 50%;
+        padding: 1rem;
+        padding-right: 3rem;
+    }
+
+}

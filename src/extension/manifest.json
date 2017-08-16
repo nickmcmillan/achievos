@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Achievos",
+    "version": "1.3",
+    "description": "Score achievements for discovering websites",
+    "author": "Nick McMillan",
+    "homepage_url": "http://www.achievos.xyz",
+    "icons": {
+        "32": "icon32.png",
+        "128": "icon128.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["extension.js"]
+        }
+    ]
+}
