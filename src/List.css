@@ -4,10 +4,6 @@
     line-height: 1;
 }
 
-.success {
-    color: #fff;
-}
-
 .success .clue {
     text-decoration: line-through;
 }

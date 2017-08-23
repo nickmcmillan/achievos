@@ -1,5 +1,6 @@
 /* globals window, chrome, CustomEvent, document */
-import React, { Component } from 'react'
+import { h, Component } from 'preact';
+/** @jsx h */
 
 import Intro from './Intro'
 import List from './List'
@@ -382,8 +383,11 @@ class App extends Component {
         return (
             <main className={styles.main}>
                 <div className={styles.plaque}>
-                    <img className={styles.logo} src={logo} alt="" />
-                    <h1 className={styles.title} >Achievos</h1>
+                    <div className={styles.plaqueInner}>
+                        <img className={styles.logo} src={logo} alt="" />
+                        <h1 className={styles.title} >Achievos</h1>
+                        <p className={styles.byline}>Get achievements for discovering websites.</p>
+                    </div>
                 </div>
 
                 <div className={styles.content}>
@@ -396,7 +400,6 @@ class App extends Component {
                         />
                     ) : (
                         <section className={styles.intro}>
-                            <p>Get achievements for discovering websites.</p>
                             <p>Visit this site in Chrome desktop to get the extension.</p>
                         </section>
                     )}

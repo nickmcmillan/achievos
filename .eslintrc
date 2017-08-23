@@ -13,7 +13,7 @@
     "react",
     "jsx-a11y"
   ],
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["eslint:recommended"],
   "rules": {
     "comma-dangle" : 0,
     "no-constant-condition": 1,

@@ -1,12 +1,11 @@
-import React from 'react'
+import { h } from 'preact';
+/** @jsx h */
 import styles from './App.css'
 
 const Intro = props => (
     <div>
         {!props.isExtensionInstalled ? (
             <section className={styles.intro}>
-                <p>Get achievements for discovering websites.</p>
-
                 <button
                     onClick={props.addToChrome}
                     className={styles.button}

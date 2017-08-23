@@ -21,15 +21,15 @@
     opacity: 0.85;
     outline: 0;
 }
+
 .button:active {
     transform: scale(0.96);
 }
 
 .buttonInline {
     color: #3f3f3f;
-    //font-weight: 700;
-    transition: color 200ms;
 }
+
 .buttonInline:hover,
 .buttonInline:focus {
     text-decoration: underline;
@@ -39,72 +39,61 @@
 .title {
     padding: 0;
     font-weight: 400;
-    font-family: 'Secular One',sans-serif;
-    font-feature-settings: 'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;
+    font-family: 'Secular One', sans-serif;
+    font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
     font-size: 11.75vmin;
     letter-spacing: 0;
     margin: 0 0 0.5rem;
 }
 
 .plaque {
-    //position: fixed;
-    //width: 100%;
-    padding: 1rem;
+    padding: 0.5rem 0;
     margin: 0 auto;
+    line-height: initial;
 }
 
 .logo {
     max-width: 50vmin;
+    display: block;
+    margin: 0 auto 0.75rem;
 }
-
 
 .intro {
     padding-bottom: 1rem;
 }
 
-.form {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1rem;
-    line-height: 2.5;
-}
-
-.input {
-    line-height: 2.5;
-    background-color: #3f3f3f;
-    color: #fff;
-    border: 0;
-    padding: 0 1rem;
-    margin-right: 1rem;
-    width: 100%;
-    transition: opacity 300ms cubic-bezier(.25,.46,.45,.94);
-    will-change: opacity;
-}
-.input:hover,
-.input:focus {
-    opacity: 0.85;
-    outline: 0;
+.byline {
+    color: #3f3f3f;
+    font-family: 'Rasa', serif;
 }
 
 .content {
     padding: 0 1rem;
 }
 
-@media (min-width: 1100px) {
-
+@media (min-width: 960px) {
     .main {
         display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .plaque {
-        height: 80vh;
-        transform: scale(0.75);
+        padding: 1.25rem 0 0;
+    }
+
+    .plaqueInner {
+        position: fixed;
+        margin-left: -6.5rem;
+        max-width: 360px;
+    }
+
+    .title {
+        font-size: 2.6rem;
     }
 
     .logo {
-        max-width: 100%;
-        padding-bottom: 1rem;
+        margin-bottom: 1rem;
     }
 
     .content {
@@ -112,5 +101,4 @@
         padding: 1rem;
         padding-right: 3rem;
     }
-
 }
