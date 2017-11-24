@@ -425,7 +425,7 @@ get(()=>{
             }
         }
         if (!found) {
-            //if it exists, add the set username into the query string
+            // if it doesn't exists, pop open the notification!
             doc.body.onload = createNotification(successfulMatch[0])
             // and then set the event to chromestorage
             set(successfulMatch[0])
